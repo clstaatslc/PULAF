@@ -1,0 +1,697 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FindIt Campus | Lost & Found</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    nav a {
+      color: #475569;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #2563eb;
+    }
+
+    .hero {
+      margin: 32px auto;
+      width: 86%;
+      max-width: 1200px;
+      padding: 55px 30px;
+      border-radius: 20px;
+      background: #dbeafe;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(30px, 5vw, 46px);
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: #1e3a8a;
+    }
+
+    .hero p {
+      color: #475569;
+      margin-bottom: 24px;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      max-width: 620px;
+      margin: auto;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      background: white;
+      font: inherit;
+    }
+
+    button {
+      border: none;
+      border-radius: 9px;
+      padding: 12px 18px;
+      background: #2563eb;
+      color: white;
+      font: inherit;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .container {
+      width: 86%;
+      max-width: 1200px;
+      margin: 40px auto;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      font-size: 25px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .filters select {
+      width: auto;
+      min-width: 170px;
+    }
+
+    .items {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .item-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .item-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .item-picture {
+      height: 175px;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 65px;
+    }
+
+    .item-info {
+      padding: 18px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .found {
+      color: #166534;
+      background: #dcfce7;
+    }
+
+    .lost {
+      color: #9a3412;
+      background: #ffedd5;
+    }
+
+    .item-info h3 {
+      margin-bottom: 8px;
+    }
+
+    .item-info p {
+      color: #64748b;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .report-section {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 50px;
+    }
+
+    .report-section p {
+      color: #64748b;
+      margin: 8px 0 18px;
+    }
+
+    .report-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .report-form textarea {
+      min-height: 95px;
+      resize: vertical;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    #message {
+      margin-top: 14px;
+      color: #166534;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 25px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 800px) {
+      .items {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      header {
+        padding: 16px 5%;
+      }
+
+      nav {
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .hero, .container {
+        width: 92%;
+      }
+
+      .hero {
+        padding: 38px 18px;
+      }
+
+      .search-box {
+        flex-direction: column;
+      }
+
+      .items {
+        grid-template-columns: 1fr;
+      }
+
+      .report-form {
+        grid-template-columns: 1fr;
+      }
+
+      .full-width {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">PULAF</div>
+
+    <nav>
+      <a href="#beranda">Home Page</a>
+      <a href="#katalog">Catalog</a>
+      <a href="#lapor">Make a Report</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="beranda">
+    <h1>Your stuff might be here</h1>
+    <p>
+      Find your lost items and help fellow students find theirs.
+    </p>
+
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search item name or location..."
+        aria-label="Search items"
+      >
+      <button type="button" id="searchButton">Search Items</button>
+    </div>
+  </section>
+
+  <main class="container" id="katalog">
+    <div class="section-heading">
+      <h2>Product Catalog</h2>
+      <span>Lost & Found Items</span>
+    </div>
+
+    <div class="filters">
+      <select id="statusFilter" aria-label="Filter status">
+        <option value="semua">All statuses</option>
+        <option value="ditemukan">Item Found</option>
+        <option value="hilang">Item Lost</option>
+      </select>
+
+      <select id="categoryFilter" aria-label="Filter category">
+        <option value="semua">All categories</option>
+        <option value="Elektronik">Electronic</option>
+        <option value="Tas">Bag</option>
+        <option value="Aksesori">Accessories</option>
+        <option value="Dokumen">Documents</option>
+        <option value="Alat tulis">Stationery</option>
+        <option value="Others">Others</option>
+      </select>
+    </div>
+
+    <div class="items" id="itemList">
+
+      
+
+    </div>
+
+    <p id="emptyMessage" hidden>
+      Item not found. Try different keywords or filters.
+    </p>
+  </main>
+
+  <section class="container" id="lapor">
+    <div class="report-section">
+      <h2>Report Item</h2>
+      <p>
+        Fill out the form to report a lost item
+        or an item you have found.
+      </p>
+
+      <form id="reportForm" class="report-form">
+        <select id="reportType" required>
+          <option value="">Select item type</option>
+          <option value="Hilang">I have lost an item</option>
+          <option value="Ditemukan">I have found an item</option>
+        </select>
+
+        <select id="reportCategory" required>
+          <option value="">Select category</option>
+          <option value="Elektronik">Electronic</option>
+          <option value="Tas">Bag</option>
+          <option value="Aksesori">Accessories</option>
+          <option value="Dokumen">Documents</option>
+          <option value="Lainnya">Others</option>
+        </select>
+
+        <input id="reportName"
+          placeholder="Item name"
+          required>
+
+        <input id="reportLocation"
+          placeholder="Item location"
+          required>
+
+        <textarea id="reportDescription"
+          class="full-width"
+          placeholder="Item description and characteristics"
+          required></textarea>
+
+          <label for="eventDate">Date Lost/Found</label>
+        <input
+          type="date"
+          id="eventDate"
+          class="full-width"
+          required
+        >
+
+          <label for="reportPhone">Phone Number</label>
+        <input
+          type="tel"
+          id="reportPhone"
+          class="full-width"
+          placeholder="Example: 081234567890"
+          autocomplete="tel"
+          required
+        >
+
+          <label for="reportPhoto">Item Photo (optional)</label>
+        <input
+          type="file"
+          id="reportPhoto"
+          class="full-width"
+          accept="image/jpeg,image/png,image/webp"
+        >
+
+        <button type="submit" class="full-width">
+          Submit Report
+        </button>
+      </form>
+
+      <p id="message" role="status"></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 PULAF — Safe Environment with Lost And Found Website Platform</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://mdmqlxibgwdvwblyermd.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_2nJmlhv9GxLwIqNZ6JVnMA_lHTRfdHC";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+   
+
+    
+const searchInput = document.getElementById("searchInput");
+const statusFilter = document.getElementById("statusFilter");
+const categoryFilter = document.getElementById("categoryFilter");
+const itemList = document.getElementById("itemList");
+const emptyMessage = document.getElementById("emptyMessage");
+
+let reports = [];
+
+function getStatus(reportType) {
+  const type = String(reportType || "").toLowerCase();
+
+  if (type === "ditemukan" || type === "found") {
+    return "ditemukan";
+  }
+
+  if (type === "hilang" || type === "lost") {
+    return "hilang";
+  }
+
+  return type;
+}
+
+function getItemIcon(category) {
+  const icons = {
+    "Elektronik": "🎧",
+    "Tas": "🎒",
+    "Aksesori": "👛",
+    "Dokumen": "📄",
+    "Alat tulis": "✏️",
+    "Lainnya": "📦"
+  };
+
+  return icons[category] || "📦";
+}
+
+function renderReports() {
+  const keyword = searchInput.value.toLowerCase().trim();
+  const selectedStatus = statusFilter.value;
+  const selectedCategory = categoryFilter.value;
+
+  itemList.replaceChildren();
+  let visibleCount = 0;
+
+  reports.forEach((report) => {
+    const name = report.item_name || "Barang tanpa nama";
+    const location = report.location || "-";
+    const category = report.category || "Lainnya";
+    const status = getStatus(report.report_type);
+    const description = report.description || "";
+
+    const date = report.event_date
+      ? new Date(report.event_date + "T00:00:00")
+          .toLocaleDateString("id-ID")
+      : "";
+
+    const searchableText =
+      `${name} ${location} ${description}`.toLowerCase();
+
+    const matchesKeyword = searchableText.includes(keyword);
+
+    const matchesStatus =
+      selectedStatus === "semua" || status === selectedStatus;
+
+    const matchesCategory =
+      selectedCategory === "semua" ||
+      category.toLowerCase() === selectedCategory.toLowerCase();
+
+    if (!matchesKeyword || !matchesStatus || !matchesCategory) {
+      return;
+    }
+
+    const card = document.createElement("article");
+    card.className = "item-card";
+
+    
+    const picture = document.createElement("div");
+    picture.className = "item-picture";
+
+    if (report.photo_path) {
+      const image = document.createElement("img");
+
+      const { data } = supabaseClient.storage
+        .from("lost-found-photos")
+        .getPublicUrl(report.photo_path);
+
+      image.src = data.publicUrl;
+      image.alt = name;
+      image.style.width = "100%";
+      image.style.height = "100%";
+      image.style.objectFit = "cover";
+
+      picture.appendChild(image);
+    } else {
+      picture.textContent = getItemIcon(category);
+    }
+
+
+    const info = document.createElement("div");
+    info.className = "item-info";
+
+    const badge = document.createElement("span");
+    badge.className =
+      "status " + (status === "ditemukan" ? "found" : "lost");
+    badge.textContent =
+      status === "ditemukan" ? "Ditemukan" : "Hilang";
+
+    const title = document.createElement("h3");
+    title.textContent = name;
+
+    const locationText = document.createElement("p");
+    locationText.textContent = "📍 " + location;
+
+    const categoryText = document.createElement("p");
+    categoryText.textContent = "Kategori: " + category;
+
+    info.append(badge, title, locationText, categoryText);
+
+    if (date) {
+      const dateText = document.createElement("p");
+      dateText.textContent = "📅 " + date;
+      info.append(dateText);
+    }
+
+    if (description) {
+      const descriptionText = document.createElement("p");
+      descriptionText.textContent = description;
+      info.append(descriptionText);
+    }
+
+    card.append(picture, info);
+    itemList.append(card);
+    visibleCount++;
+  });
+
+  emptyMessage.textContent = visibleCount
+    ? ""
+    : "Barang tidak ditemukan. Coba kata kunci atau filter lain.";
+
+  emptyMessage.hidden = visibleCount > 0;
+}
+
+async function loadReports() {
+  emptyMessage.hidden = false;
+  emptyMessage.textContent = "Memuat laporan...";
+
+  const { data, error } = await supabaseClient
+    .from("reports")
+    .select("*");
+
+  if (error) {
+    console.error("Gagal memuat laporan:", error);
+    emptyMessage.textContent =
+      "Laporan gagal dimuat. Periksa izin SELECT pada tabel reports.";
+    return;
+  }
+
+  reports = data || [];
+
+  reports.sort((a, b) =>
+    String(b.created_at || "").localeCompare(
+      String(a.created_at || "")
+    )
+  );
+
+  renderReports();
+}
+
+searchInput.addEventListener("input", renderReports);
+statusFilter.addEventListener("change", renderReports);
+categoryFilter.addEventListener("change", renderReports);
+
+document.getElementById("searchButton").addEventListener("click", () => {
+  renderReports();
+  document.getElementById("katalog").scrollIntoView({
+    behavior: "smooth"
+  });
+});
+
+loadReports();
+
+
+    
+document.getElementById("reportForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const message = document.getElementById("message");
+  const submitButton = event.target.querySelector('button[type="submit"]');
+
+  const reportType = document.getElementById("reportType").value;
+  const reportCategory = document.getElementById("reportCategory").value;
+  const itemName = document.getElementById("reportName").value.trim();
+  const location = document.getElementById("reportLocation").value.trim();
+  const description = document.getElementById("reportDescription").value.trim();
+  const eventDate = document.getElementById("eventDate").value;
+  const phone = document.getElementById("reportPhone").value.trim();
+  const photoFile = document.getElementById("reportPhoto").files[0];
+
+  message.textContent = "Menyimpan laporan...";
+  submitButton.disabled = true;
+
+  try {
+    let photoPath = null;
+
+    // Upload foto jika pengguna memilih foto
+    if (photoFile) {
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+      if (!allowedTypes.includes(photoFile.type)) {
+        throw new Error("Format foto harus JPG, PNG, atau WEBP.");
+      }
+
+      const fileExtension = photoFile.name.split(".").pop().toLowerCase();
+      const filePath =
+        `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExtension}`;
+
+      const { error: uploadError } = await supabaseClient
+        .storage
+        .from("lost-found-photos")
+        .upload(filePath, photoFile);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      photoPath = filePath;
+    }
+
+    // Simpan laporan ke tabel Supabase
+    const { error } = await supabaseClient
+      .from("reports")
+      .insert([{
+        item_name: itemName,
+        report_type: reportType,
+        category: reportCategory,
+        location: location,
+        description: description,
+        event_date: eventDate,
+        phone: phone,
+        photo_path: photoPath
+      }]);
+
+    if (error) {
+      throw error;
+    }
+
+    message.textContent = "Laporan berhasil disimpan!";
+    event.target.reset();
+
+  } catch (error) {
+    console.error("Gagal menyimpan laporan:", error);
+    message.textContent =
+      "Laporan gagal disimpan: " + error.message;
+  } finally {
+    submitButton.disabled = false;
+  }
+});
+
+  </script>
+
+</body>
+</html>
